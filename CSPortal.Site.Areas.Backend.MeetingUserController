@@ -1,0 +1,103 @@
+using CSPortal.IServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using CSPortal.Entity;
+using CSPortal.Libray;
+
+namespace CSPortal.Site.Areas.Backend.Controllers
+{
+    public class MeetingUserController : BaseController
+    {
+        // GET: Backend/MeetingUser
+
+        #region service注入
+        /// <summary>
+        /// service注入
+        /// </summary>
+        public MeetingUserController(
+            IMeetingsUsersServices _IMeetingsUsersServices
+            )
+        {
+            this._IMeetingsUsersServices = _IMeetingsUsersServices;
+        }
+        #endregion
+
+        #region 用户信息首页
+        /// <summary>
+        ///  用户信息首页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Index()
+        {
+            return View();
+        }
+        #endregion
+
+        #region 加载用户信息数据
+        /// <summary>
+        /// 加载用户信息数据
+        /// </summary>
+        /// <param name="draw"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="rows"></param>
+        /// <returns></returns>
+        public JsonResult GetList(int draw, int pageIndex, int rows)
+        {
+            try
+            {
+                var wmrList = _IMeetingsUsersServices.QueryByWhere(a => true, "CreateTime DESC").ToList();
+                var mapList = new List<Dictionary<string, object>>();
+                var list = wmrList.Skip(rows * (pageIndex - 1));
+                foreach (var w in list)
+                {
+                    var map = new Dictionary<string, object>();
+                    map.Add("Name", w.Name);
+                    map.Add("UserID", w.UserID);
+                    map.Add("OpenID", w.OpenID);
+                    map.Add("Mobile", w.Mobile);
+                    map.Add("Email",  w.Email);
+                    map.Add("Company",w.Company);
+                    map.Add("Type", w.Type);
+                    mapList.Add(map);
+                }
+                var total = wmrList.Count;
+                return Json(new { state = 1, recordsTotal = total, recordsFiltered = total, draw = draw, data = mapList });
+            }
+            catch (Exception e)
+            {
+                LogHelper.Error("", Session.SessionID, "", "==用户信息数据加载异常==", e);
+                return Json(new { state = 0 });
+            }
+        }
+        #endregion
+
+        #region 更新用户VIP状态
+
+        public JsonResult UpdateType(string ID,string Type)
+        {
+            var res = -1;
+            if (Type == "2") {
+                res = _IMeetingsUsersServices.Update(a => new MeetingsUsers
+                {
+                    Type = 1
+                },
+                b => b.OpenID == ID
+                );
+            }
+            else 
+            {
+                res = _IMeetingsUsersServices.Update(a => new MeetingsUsers
+                {
+                    Type = 2
+                },
+                b => b.OpenID == ID
+                );
+            }
+            return Json(new{ state = 1,data = res });
+        }
+        #endregion
+    }
+}
