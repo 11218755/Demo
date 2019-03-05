@@ -1,0 +1,134 @@
+using System;
+using System.Runtime.Serialization;
+
+/*!
+* 文件名称：Meetings实体类
+*/
+namespace CSPortal.Entity
+{
+	[Serializable]
+	[DataContract]
+	public partial class Meetings
+	{
+		/// <summary>
+		/// 描述：
+		/// 可空：不为空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string ID { get; set; }
+
+		/// <summary>
+		/// 描述：
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string MeetingCode { get; set; }
+
+		/// <summary>
+		/// 描述：
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// 描述：会议地点
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string Address { get; set; }
+
+		/// <summary>
+		/// 描述：会议时长
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string Duration { get; set; }
+
+		/// <summary>
+		/// 描述：参会人数
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string AttendeeCount { get; set; }
+
+		/// <summary>
+		/// 描述：
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string Money { get; set; }
+
+		/// <summary>
+		/// 描述：联系电话
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string Phone { get; set; }
+
+		/// <summary>
+		/// 描述：其他需求
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string Other { get; set; }
+
+		/// <summary>
+		/// 描述：
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public Nullable<DateTime> StartTime { get; set; }
+
+		/// <summary>
+		/// 描述：
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public Nullable<DateTime> EndTime { get; set; }
+
+		/// <summary>
+		/// 描述：1.未发布（已申请）、2.进行中、3.已结束
+		/// 可空：不为空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public int Status { get; set; }
+
+		/// <summary>
+		/// 描述：会议类型（1.对内、2.对外）
+		/// 可空：不为空
+		/// 默认值：((1))
+		/// </summary>
+		[DataMember]
+		public int Type { get; set; }
+
+		/// <summary>
+		/// 描述：
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public Nullable<DateTime> CreateTime { get; set; }
+
+		/// <summary>
+		/// 描述：
+		/// 可空：空
+		/// 默认值：
+		/// </summary>
+		[DataMember]
+		public string CreateUser { get; set; }
+
+	}
+}
